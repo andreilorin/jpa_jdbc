@@ -1,7 +1,8 @@
-//STEP 1. Import required packages
+package jdbc;
+
 import java.sql.*;
 
-public class App {
+public class JdbcTutorial {
    // JDBC driver name and database URL
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:mysql://localhost/EMP";
