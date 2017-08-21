@@ -5,18 +5,18 @@ import java.sql.*;
 public class JdbcTutorial {
    // JDBC driver name and database URL
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   static final String DB_URL = "jdbc:mysql://localhost/EMP";
+   static final String DB_URL = "jdbc:mysql://localhost";
 
    //  Database credentials
-   static final String USER = "username";
-   static final String PASS = "password";
+   static final String USER = "*****";
+   static final String PASS = "*****";
    
    public static void main(String[] args) {
    Connection conn = null;
    Statement stmt = null;
    try{
       //STEP 2: Register JDBC driver
-      Class.forName("com.mysql.jdbc.Driver");
+      Class.forName(JDBC_DRIVER);
 
       //STEP 3: Open a connection
       System.out.println("Connecting to database...");
@@ -25,24 +25,27 @@ public class JdbcTutorial {
       //STEP 4: Execute a query
       System.out.println("Creating statement...");
       stmt = conn.createStatement();
-      String sql;
-      sql = "SELECT id, first, last, age FROM Employees";
-      ResultSet rs = stmt.executeQuery(sql);
+      String selectDatabase;
+      String retrieveData;
+
+      selectDatabase = "USE insurance;";
+      retrieveData = "SELECT id, name FROM client;";
+
+      ResultSet select = stmt.executeQuery(selectDatabase);
+
+      ResultSet rs = stmt.executeQuery(retrieveData);
 
       //STEP 5: Extract data from result set
       while(rs.next()){
          //Retrieve by column name
          int id  = rs.getInt("id");
-         int age = rs.getInt("age");
-         String first = rs.getString("first");
-         String last = rs.getString("last");
+         String name = rs.getString("name");
 
          //Display values
-         System.out.print("ID: " + id);
-         System.out.print(", Age: " + age);
-         System.out.print(", First: " + first);
-         System.out.println(", Last: " + last);
+         System.out.print("ID: " + id + "\n");
+         System.out.print("Name: " + name + "\n");
       }
+
       //STEP 6: Clean-up environment
       rs.close();
       stmt.close();
