@@ -1,8 +1,13 @@
 package jpa;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Client {
 
-	private int id;
+	@Id
+    private int id;
 	private String name;
 	private String address1;
 	private String address2;

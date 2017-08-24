@@ -26,7 +26,7 @@ public class JpaTutorial {
         int empID3 = tutorial.addClient("John", "Blackrock", "Main");
 
       /* List down all the employees */
-//        tutorial.listClients();
+        tutorial.listClients();
 
       /* Update employee's records */
         tutorial.updateClient(empID1, "Andy");
@@ -35,8 +35,9 @@ public class JpaTutorial {
         tutorial.deleteClient(empID2);
 
       /* List down new list of the employees */
-//        tutorial.listClients();
+        tutorial.listClients();
     }
+
     /* Method to CREATE an employee in the database */
     public int addClient(String name, String address1, String address2){
         Session session = factory.openSession();
@@ -55,36 +56,37 @@ public class JpaTutorial {
         }
         return clientID;
     }
+
     /* Method to  READ all the employees */
-//    public void listClients( ){
-//        Session session = factory.openSession();
-//        Transaction tx = null;
-//        try{
-//            tx = session.beginTransaction();
-//            List employees = session.createQuery("FROM client").list();
-//            for (Iterator iterator =
-//                 employees.iterator(); iterator.hasNext();){
-//                Client client = (Client) iterator.next();
-//                System.out.print("Name: " + client.getName());
-//                System.out.print("Address1: " + client.getAddress1());
-//                System.out.println("Address2: " + client.getAddress2());
-//            }
-//            tx.commit();
-//        }catch (HibernateException e) {
-//            if (tx!=null) tx.rollback();
-//            e.printStackTrace();
-//        }finally {
-//            session.close();
-//        }
-//    }
+    public void listClients( ){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            List employees = session.createQuery("FROM jpa.Client").list();
+            for (Iterator iterator =
+                 employees.iterator(); iterator.hasNext();){
+                Client client = (Client) iterator.next();
+                System.out.print("Name: " + client.getName());
+                System.out.print(" Address1: " + client.getAddress1());
+                System.out.println(" Address2: " + client.getAddress2());
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+    }
+
     /* Method to UPDATE salary for an employee */
     public void updateClient(int employeeId, String name ){
         Session session = factory.openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            Client client =
-                    (Client)session.get(Client.class, employeeId);
+            Client client = (Client)session.get(Client.class, employeeId);
             client.setName( name );
             session.update(employeeId);
             tx.commit();
@@ -95,14 +97,14 @@ public class JpaTutorial {
             session.close();
         }
     }
+
     /* Method to DELETE an employee from the records */
     public void deleteClient(int employeeId){
         Session session = factory.openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            Client client =
-                    (Client)session.get(Client.class, employeeId);
+            Client client = (Client)session.get(Client.class, employeeId);
             session.delete(client);
             tx.commit();
         }catch (HibernateException e) {

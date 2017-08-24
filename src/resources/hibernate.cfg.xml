@@ -15,10 +15,10 @@
          jdbc:mysql://localhost/insurance
       </property>
       <property name="hibernate.connection.username">
-         *****
+         andrei
       </property>
       <property name="hibernate.connection.password">
-         *****
+         passand
       </property>
 
       <mapping resource="Client.hbm.xml"/>
